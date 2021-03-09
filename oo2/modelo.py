@@ -50,17 +50,41 @@ class Serie(Programa):
         return f'Programa(nome={self.nome}, ano={self.ano}, temporadas={self.temporadas}, likes={self.likes})'
 
 
+class Playlist:
+    def __init__(self, nome, programas):
+        self.nome = nome
+        self._programas = programas
+
+    def __getitem__(self, item):
+        return self._programas[item]
+
+    def __len__(self):
+        return len(self._programas)
+
+    @property
+    def listagem(self):
+        return self._programas
+
+
 vingadores = Filme('vingadores', 2018, 160)
-vingadores.dar_like()
-# print(f'Nome: {vingadores.nome} - Ano: {vingadores.ano} - Duração: {vingadores.duracao} - Likes: {vingadores.likes}')
-
 atlanta = Serie('atlanta', 2018, 2)
+
+tmep = Filme('Todo mundo em pânico', 1999, 100)
+demolidor = Serie('Demolidor', 2016, 2)
+
+vingadores.dar_like()
+tmep.dar_like()
 atlanta.dar_like()
 atlanta.dar_like()
-# print(f'Nome: {atlanta.nome} - Ano: {atlanta.ano} - Temporadas: {atlanta.temporadas} - Likes: {atlanta.likes}')
+demolidor.dar_like()
 
-filmes_series = [vingadores, atlanta]
+filmes_e_series = [vingadores, atlanta, demolidor, tmep]
+playlist_fim_de_semana = Playlist('Fim de semana', filmes_e_series)
 
-for programa in filmes_series:
+print(f'Tamanho da playlist: {len(playlist_fim_de_semana)}')
+
+for programa in playlist_fim_de_semana:
     # detalhes = programa.duracao if hasattr(programa, 'duracao') else programa.temporadas
     print(programa)
+
+print(f'Demolidor está ou não na lista: {demolidor in playlist_fim_de_semana}')
